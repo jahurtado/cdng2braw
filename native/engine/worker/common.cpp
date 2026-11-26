@@ -118,16 +118,21 @@ void checkResources(const std::filesystem::path &root) {
         throw Error(t("The embedded calibration is damaged: ") + name);
 }
 
+bool isDngFrame(const std::filesystem::path &file) {
+    const auto name = file.filename().string();
+    if (name.rfind("._", 0) == 0) return false;
+    auto extension = file.extension().string();
+    std::transform(extension.begin(), extension.end(), extension.begin(),
+                   [](char c) { return char(std::tolower((unsigned char)c)); });
+    return extension == ".dng";
+}
+
 std::vector<std::filesystem::path> sequence(const std::filesystem::path &folder) {
     if (!std::filesystem::is_directory(folder)) throw Error(t("Select a folder containing a CinemaDNG sequence."));
     std::vector<std::filesystem::path> files;
     std::error_code ec;
     for (const auto &entry : std::filesystem::directory_iterator(folder, ec)) {
-        if (!entry.is_regular_file(ec)) continue;
-        auto extension = entry.path().extension().string();
-        std::transform(extension.begin(), extension.end(), extension.begin(),
-                       [](char c) { return char(std::tolower((unsigned char)c)); });
-        if (extension == ".dng") files.push_back(entry.path());
+        if (entry.is_regular_file(ec) && isDngFrame(entry.path())) files.push_back(entry.path());
     }
     return sequence(folder, std::move(files));
 }

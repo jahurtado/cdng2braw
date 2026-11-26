@@ -32,6 +32,10 @@ void checkResources(const std::filesystem::path &root);
 // sequence(): una posición por frame de la toma, en orden; los números que faltan quedan como rutas vacías (huecos de
 // hasta MaxMissingRun frames seguidos). Al menos dos DNG con el mismo prefijo.
 constexpr int MaxMissingRun = 48;
+// Si el fichero es un fotograma de la toma: extensión .dng (en mayúsculas o minúsculas) y no un «._nombre.DNG», los
+// atributos que macOS deja al copiar a un disco exFAT o FAT (las tarjetas de cámara). En macOS no se ven, pero en Linux
+// y Windows son ficheros normales y romperían la numeración de la toma.
+bool isDngFrame(const std::filesystem::path &file);
 std::vector<std::filesystem::path> sequence(const std::filesystem::path &folder);
 // Igual, con los DNG ya listados (la exploración del lote no vuelve a listar la carpeta).
 std::vector<std::filesystem::path> sequence(const std::filesystem::path &folder, std::vector<std::filesystem::path> files);

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=cdng2braw
+GenericName=CinemaDNG to BRAW Converter
+Comment=Convert CinemaDNG sequences to Blackmagic RAW
+Exec=cdng2braw
+Icon=cdng2braw
+Categories=AudioVideo;Video;
+Terminal=false

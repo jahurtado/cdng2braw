@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
     QApplication app(argc, argv);
     app.setApplicationName("CDNG to BRAW Converter");
     app.setWindowIcon(QIcon(":/ui/icon.png"));
-    app.setApplicationVersion("1.0.0");
+    app.setApplicationVersion("1.0.1");
     const auto args = app.arguments();
     const auto lang = args.indexOf("--language");
     if (lang >= 0 && (lang + 1 >= args.size() || !QStringList{"system", "en", "es"}.contains(args[lang + 1]))) return 2;

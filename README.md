@@ -86,6 +86,22 @@ Neither is signed with a paid developer certificate, so the first launch is
 blocked once and you allow it on purpose: on macOS through System Settings →
 Privacy & Security, on Windows by clicking past the SmartScreen warning.
 
+There is also an **experimental** Linux x64 AppImage, in release 1.0.1 (the
+macOS and Windows packages are in 1.0.0). It has not been tried with DaVinci
+Resolve on Linux yet. On Xubuntu 24.04 it converts Sigma fp takes into the same
+image as the macOS app, but takes from the original Pocket Cinema Camera can't
+be converted on Linux for now: the folder where Resolve for Linux reads camera
+profiles is not known yet, so the app can't install the profile. It needs glibc
+2.35 or later (Ubuntu 22.04, Debian 12, Fedora 36 or later).
+
+```sh
+chmod +x cdng2braw-1.0.1-x86_64.AppImage
+./cdng2braw-1.0.1-x86_64.AppImage
+```
+
+If it fails to start because of FUSE (Ubuntu 24.04 doesn't include `libfuse2`),
+install `libfuse2t64` or run it with `--appimage-extract-and-run`.
+
 ## From source
 
 The engine and the app are C++17 with CMake. The app uses Qt 5 or 6; the
@@ -108,6 +124,11 @@ beyond the standard library; the one that comes with macOS will do.
 On Windows, with MSVC 2022, Qt 6 and [vcpkg](https://vcpkg.io/), `build.ps1`
 does the same: `.\build.ps1 app`, `.\build.ps1 test`, `.\build.ps1 package`.
 The paths it expects are at the top of the script.
+
+The Linux AppImage is built in a Docker container (Ubuntu 22.04, Qt 6.8.3,
+vcpkg) by `./build-linux.sh`, which also runs the test suites. It works from any
+system with Docker; on a Mac with Apple Silicon, in a colima VM with Rosetta
+(`colima start --vm-type vz --vz-rosetta`).
 
 The app can be driven from outside for end-to-end tests:
 [docs/automation.md](docs/automation.md).

@@ -45,8 +45,8 @@ set_target_properties(cdng_app PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER "com.elcacharrista.cdng2braw"
     MACOSX_BUNDLE_ICON_FILE "AppIcon.icns"
     MACOSX_BUNDLE_BUNDLE_NAME "CDNG to BRAW Converter"
-    MACOSX_BUNDLE_BUNDLE_VERSION "1.0.0"
-    MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0.0")
+    MACOSX_BUNDLE_BUNDLE_VERSION "1.0.1"
+    MACOSX_BUNDLE_SHORT_VERSION_STRING "1.0.1")
 add_dependencies(cdng_app cdng_profile_helper)
 if(APPLE)
     add_custom_command(TARGET cdng_app POST_BUILD

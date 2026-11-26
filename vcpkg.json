@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
   "name": "cdng2braw",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Dependencias del motor C++ (CinemaDNG -> Blackmagic RAW). Mismas versiones en macOS, Windows y Linux.",
   "builtin-baseline": "8469b01206bff843500592f18dcab88b13331da6",
   "dependencies": [

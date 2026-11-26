@@ -113,7 +113,7 @@ std::string scanClips(const std::filesystem::path &root, const Engine &engine, l
             if (ec) break;
             const auto name = it->path().filename().string();
             if (it->is_directory(ec)) { if (!name.empty() && name[0] != '.') subfolders.insert(name); }   // ocultas y temporales fuera
-            else if (lower(it->path().extension().string()) == ".dng") dngs.insert(name);
+            else if (isDngFrame(it->path())) dngs.insert(name);
         }
         if (!dngs.empty()) {
             std::vector<std::filesystem::path> paths;

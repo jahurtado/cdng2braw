@@ -25,6 +25,23 @@ Qt Core, Gui, Widgets and Network with their platform plugins, dynamically linke
 and other contributors and is used under the GNU Lesser General Public License v3. Qt source and licence information:
 https://www.qt.io/licensing/open-source-lgpl-obligations and https://code.qt.io/.
 
+## Linux AppImage
+
+The Linux package is built on Ubuntu 22.04 and differs from the macOS one in these components:
+
+- The conversion engine (`usr/bin/converter/cdng-convert`) links statically, unmodified, **LibRaw 0.22.3** (CDDL 1.0,
+  as above; https://github.com/LibRaw/LibRaw, tag 0.22.3), Little CMS 2, libjpeg-turbo, simdjson and **zlib**
+  (zlib licence, https://zlib.net/), built with vcpkg, and the GCC runtime libraries **libstdc++, libgcc and
+  libgomp** (GNU OpenMP), copyright the Free Software Foundation, under the GNU GPL v3 with the GCC Runtime Library
+  Exception 3.1. It does not use LLVM OpenMP or Accelerate.
+- **Qt 6.8.3** (Core, Gui, Widgets, Network, DBus, Svg and the XCB platform plugin), dynamically linked under the
+  LGPL v3 as above, with the **ICU 73** libraries that come with it (Unicode licence, https://icu.unicode.org/). The
+  texts of the LGPL v3 and the GPL v3 are in `usr/share/doc/cdng2braw/`. The Qt libraries are ordinary shared
+  libraries in `usr/lib/` and can be replaced.
+- The system libraries the AppImage carries so that it runs on other distributions (XCB, xkbcommon, GLib, D-Bus,
+  libpng, zstd and others) come from Ubuntu 22.04 unmodified. Each one keeps its copyright and licence file in
+  `usr/share/doc/<package>/copyright`.
+
 ## Not included
 
 No source or binary from cDNG Raw Convert is included. The Blackmagic RAW SDK and DaVinci Resolve are not bundled.

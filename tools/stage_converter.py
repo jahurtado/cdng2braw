@@ -8,6 +8,7 @@ En macOS LibRaw y compañía van enlazadas de forma estática (CDNG_STATIC_DEPS)
 queda ninguna dependencia fuera del sistema. En Windows van como DLL junto al ejecutable (enlace dinámico, que es
 el que pide la LGPL de LibRaw): se copian de la carpeta bin de vcpkg que se indique con --dll-dir y la prueba de
 que el juego está completo es que `cdng-convert --self-test` arranque, porque si falta una DLL no arranca.
+En Linux, como en macOS, va todo estático y se comprueba con readelf que solo pide glibc.
 """
 import argparse
 import shutil
@@ -54,10 +55,18 @@ def main():
         if not copied:
             raise SystemExit(f'no hay ninguna DLL en {a.dll_dir}')
         print(f'DLL copiadas: {", ".join(copied)}')
-    else:
+    elif sys.platform == 'darwin':
         # Solo bibliotecas del sistema: LibRaw y compañía van enlazadas de forma estática.
         links = subprocess.run(['/usr/bin/otool', '-L', binary], capture_output=True, text=True, check=True).stdout
         external = [line.split()[0] for line in links.splitlines()[1:] if not line.split()[0].startswith(('/usr/lib/', '/System/'))]
+        if external:
+            raise SystemExit(f'cdng-convert depende de bibliotecas externas: {external}')
+    else:
+        # Linux: también estático (libstdc++ y libgomp incluidas), así que solo puede pedir glibc.
+        dynamic = subprocess.run(['readelf', '-d', binary], capture_output=True, text=True, check=True).stdout
+        needed = [line.split('[')[1].rstrip(']') for line in dynamic.splitlines() if '(NEEDED)' in line]
+        glibc = ('libc.so', 'libm.so', 'libpthread.so', 'libdl.so', 'librt.so', 'ld-linux')
+        external = [lib for lib in needed if not lib.startswith(glibc)]
         if external:
             raise SystemExit(f'cdng-convert depende de bibliotecas externas: {external}')
     # Arranca el ejecutable ya colocado: si falta una DLL o un fichero de model/, falla aquí.

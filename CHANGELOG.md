@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.1
+
+Released only as an **experimental** Linux x64 AppImage. The macOS and Windows
+packages stay at 1.0.0, which has the same features.
+
+- Linux AppImage, built in Docker on Ubuntu 22.04 with Qt 6.8.3. Not yet tried
+  with DaVinci Resolve on Linux. Tested on Xubuntu 24.04, where Sigma fp takes
+  convert into the same image as with the macOS app.
+- Takes from the original Pocket Cinema Camera can't be converted on Linux yet:
+  the folder where Resolve for Linux reads camera profiles is not known, so the
+  app can't install the profile.
+- Fix: the hidden `._` files that macOS leaves next to each frame when it copies
+  to an exFAT or FAT card are ignored. Before, they made the take "Not
+  supported".
+
 ## 1.0.0
 
 The first public release.

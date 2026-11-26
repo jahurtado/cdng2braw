@@ -28,7 +28,7 @@ $root = $PSScriptRoot
 $buildApp = Join-Path $root 'build\qt-app'
 $buildNative = Join-Path $root 'build\native'
 $outDir = Join-Path $root 'out\cdng2braw-win64'
-$version = '1.0.0'
+$version = '1.0.1'
 
 function Assert-Tool($path, $message) {
     if (-not (Test-Path $path)) { throw $message }
